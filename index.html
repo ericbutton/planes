@@ -16,53 +16,56 @@
 <div id="map"></div>
 
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY2J1dHRvbiIsImEiOiJjazU4czY4bzQwaHJ6M2RvZWxodjRlNmNpIn0.hvLMwQMiUk6_1RoeyascnA';
+    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
     var map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [-74.5, 40], // starting position [lng, lat]
+        center: [-0.45390, 51.46918], // starting position [lng, lat]
         zoom: 9 // starting zoom
     });
-    // Replace with your API key from RapidAPI
-const apiKey = 'f1509e043amsh13cddace1c2d2cap167acdjsn1ca571b269f0';
 
-// Example API endpoint
-const adsbApiUrl = 'https://adsbexchange-com1.p.rapidapi.com/v2/latlong/';
+    const apiKey = 'YOUR_RAPIDAPI_KEY';
 
-// Function to fetch ADS-B data
-async function fetchAdsbData() {
-    try {
-        const response = await fetch(adsbApiUrl, {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': apiKey,
-                'X-RapidAPI-Host': 'adsbexchange-com1.p.rapidapi.com'
-            }
-        });
-        const data = await response.json();
-        console.log('API Response:', data); // Log the entire response
-        return data.ac; // assuming 'ac' is the array of aircraft
-    } catch (error) {
-        console.error('Error fetching ADS-B data:', error);
+    // Define the center point and radius for the search
+    const latitude = 51.46918; // Replace with your desired latitude
+    const longitude = -0.45390; // Replace with your desired longitude
+    const distance = 100; // Replace with your desired radius in nautical miles
+
+    // Construct the API URL
+    const adsbApiUrl = `https://adsbexchange-com1.p.rapidapi.com/v2/lat/${latitude}/lon/${longitude}/dist/${distance}/`;
+
+    // Function to fetch ADS-B data
+    async function fetchAdsbData() {
+        try {
+            const response = await fetch(adsbApiUrl, {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': apiKey,
+                    'X-RapidAPI-Host': 'adsbexchange-com1.p.rapidapi.com'
+                }
+            });
+            const data = await response.json();
+            console.log('API Response:', data); // Log the entire response
+            return data.ac; // assuming 'ac' is the array of aircraft
+        } catch (error) {
+            console.error('Error fetching ADS-B data:', error);
+        }
     }
-}
 
+    // Function to add ADS-B data to the map
+    async function addAdsbDataToMap() {
+        const adsbData = await fetchAdsbData();
+        
+        adsbData.forEach(flight => {
+            new mapboxgl.Marker()
+                .setLngLat([flight.lon, flight.lat]) // Ensure 'lon' and 'lat' match the API response
+                .setPopup(new mapboxgl.Popup().setText(`Flight: ${flight.callsign || 'N/A'}`))
+                .addTo(map);
+        });
+    }
 
-// Function to add ADS-B data to the map
-async function addAdsbDataToMap() {
-    const adsbData = await fetchAdsbData();
-    
-    adsbData.forEach(flight => {
-        new mapboxgl.Marker()
-            .setLngLat([flight.lon, flight.lat]) // Update with the correct latitude and longitude keys from the API
-            .setPopup(new mapboxgl.Popup().setText(`Flight: ${flight.callsign || 'N/A'}`))
-            .addTo(map);
-    });
-}
-
-// Call the function to add ADS-B data
-addAdsbDataToMap();
-
+    // Call the function to add ADS-B data
+    addAdsbDataToMap();
 </script>
 
 </body>
