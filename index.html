@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div id="map"></div>
+<div id="map'></div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY2J1dHRvbiIsImEiOiJjazU4czY4bzQwaHJ6M2RvZWxodjRlNmNpIn0.hvLMwQMiUk6_1RoeyascnA';
@@ -29,15 +29,15 @@
     map.on('load', function() {
         console.log('Map has loaded successfully');
 
-        // Add the FAA Airport Diagram as an image source
+        // Add the FAA Airport Diagram as an image source with rotated coordinates
         map.addSource('lga-diagram', {
             type: 'image',
-            url: 'lga-large.png', // Replace with your actual image URL if needed
+            url: 'https://raw.githubusercontent.com/username/repository/main/lga-large.png', // Replace with your actual image URL if needed
             coordinates: [
-                [-73.8978579, 40.764478], // Top-left corner [lng, lat]
-                [-73.8469764, 40.764478], // Top-right corner [lng, lat]
-                [-73.8469764, 40.7896097], // Bottom-right corner [lng, lat]
-                [-73.8978579, 40.7896097]  // Bottom-left corner [lng, lat]
+                [-73.8469764, 40.7896097], // Now top-left corner after rotation
+                [-73.8978579, 40.7896097], // Now top-right corner after rotation
+                [-73.8978579, 40.764478], // Now bottom-right corner after rotation
+                [-73.8469764, 40.764478]  // Now bottom-left corner after rotation
             ]
         });
 
