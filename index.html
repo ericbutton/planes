@@ -28,6 +28,28 @@
 
     map.on('load', function() {
         console.log('Map has loaded successfully');
+
+        // Add the FAA Airport Diagram as an image source
+        map.addSource('lga-diagram', {
+            type: 'image',
+            url: 'lga-large.png', // Replace with your actual image URL if needed
+            coordinates: [
+                [-73.8978579, 40.764478], // Top-left corner [lng, lat]
+                [-73.8469764, 40.764478], // Top-right corner [lng, lat]
+                [-73.8469764, 40.7896097], // Bottom-right corner [lng, lat]
+                [-73.8978579, 40.7896097]  // Bottom-left corner [lng, lat]
+            ]
+        });
+
+        // Add the image layer to the map
+        map.addLayer({
+            id: 'lga-diagram-layer',
+            type: 'raster',
+            source: 'lga-diagram',
+            paint: {
+                'raster-opacity': 0.75 // Adjust the opacity as needed
+            }
+        });
     });
 
     map.on('error', function(e) {
