@@ -22,7 +22,7 @@
         style: 'mapbox://styles/ericbutton/clzhipqgw010r01pa60x18680', // updated style URL
         center: [-73.8740, 40.7769], // LGA Airport [lng, lat]
         zoom: 14, // adjusted zoom level
-        pitch: 45, // optional, adds a slight tilt to give a more dynamic view
+        pitch: 0, // optional, adds a slight tilt to give a more dynamic view
         bearing: 0 // optional, keeps the map north-up
     });
 
@@ -32,7 +32,7 @@
         // Add the FAA Airport Diagram as an image source with 180-degree rotation
         map.addSource('lga-diagram', {
             type: 'image',
-            url: 'https://raw.githubusercontent.com/username/repository/main/lga-large.png', // Replace with your actual image URL if needed
+            url: 'lga-large.png', // Replace with your actual image URL if needed
             coordinates: [
                 [-73.8978579, 40.7896097], // Top-left corner [lng, lat] (was bottom-right)
                 [-73.8469764, 40.7896097], // Top-right corner [lng, lat] (was bottom-left)
