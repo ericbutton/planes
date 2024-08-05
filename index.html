@@ -22,22 +22,22 @@
         style: 'mapbox://styles/ericbutton/clzhipqgw010r01pa60x18680', // updated style URL
         center: [-73.8740, 40.7769], // LGA Airport [lng, lat]
         zoom: 14, // adjusted zoom level
-        pitch: 45, // optional, adds a slight tilt to give a more dynamic view
+        pitch: 0, // optional, adds a slight tilt to give a more dynamic view
         bearing: 0 // optional, keeps the map north-up
     });
 
     map.on('load', function() {
         console.log('Map has loaded successfully');
 
-        // Add the FAA Airport Diagram as an image source with rotated coordinates
+        // Add the FAA Airport Diagram as an image source with flipped coordinates
         map.addSource('lga-diagram', {
             type: 'image',
-            url: 'lga-large.png', // Replace with your actual image URL if needed
+            url: '/lga-large.png', // Replace with your actual image URL if needed
             coordinates: [
-                [-73.8469764, 40.7896097], // Bottom-left corner [lng, lat]
-                [-73.8978579, 40.7896097], // Bottom-right corner [lng, lat]
-                [-73.8978579, 40.764478],  // Top-right corner [lng, lat]
-                [-73.8469764, 40.764478]   // Top-left corner [lng, lat]
+                [-73.8978579, 40.764478], // Bottom-left corner [lng, lat]
+                [-73.8469764, 40.764478], // Bottom-right corner [lng, lat]
+                [-73.8469764, 40.7896097], // Top-right corner [lng, lat]
+                [-73.8978579, 40.7896097]  // Top-left corner [lng, lat]
             ]
         });
 
