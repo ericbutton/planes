@@ -28,6 +28,10 @@
         console.log('Map has loaded successfully');
     });
 
+    map.on('error', function(e) {
+        console.error('An error occurred:', e);
+    });
+
     const apiKey = 'f1509e043amsh13cddace1c2d2cap167acdjsn1ca571b269f0';
 
     // Define the center point and radius for the search
