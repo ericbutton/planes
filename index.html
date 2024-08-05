@@ -21,7 +21,7 @@
         container: 'map', // container ID
         style: 'mapbox://styles/ericbutton/clzhipqgw010r01pa60x18680', // updated style URL
         center: [-73.8740, 40.7769], // LGA Airport [lng, lat]
-        zoom: 15, // adjusted zoom level
+        zoom: 14.5, // adjusted zoom level
         pitch: 0, // optional, adds a slight tilt to give a more dynamic view
         bearing: 0 // optional, keeps the map north-up
     });
@@ -74,7 +74,15 @@
                 }
             });
             const data = await response.json();
-            updateAircraftMarkers(data.ac);
+
+            // Debugging: Log the full API response to ensure data is being fetched
+            console.log('API Response:', data);
+
+            if (data && data.ac && Array.isArray(data.ac)) {
+                updateAircraftMarkers(data.ac);
+            } else {
+                console.error('Unexpected data structure:', data);
+            }
         } catch (error) {
             console.error('Error fetching ADS-B data:', error);
         }
@@ -91,15 +99,19 @@
 
         // Update or add markers for current aircraft data
         aircraftData.forEach(flight => {
-            if (markers[flight.callsign]) {
-                // Update the existing marker position
-                markers[flight.callsign].setLngLat([flight.lon, flight.lat]);
+            if (flight.lon && flight.lat) {  // Ensure valid coordinates
+                if (markers[flight.callsign]) {
+                    // Update the existing marker position
+                    markers[flight.callsign].setLngLat([flight.lon, flight.lat]);
+                } else {
+                    // Create a new marker if it doesn't exist
+                    markers[flight.callsign] = new mapboxgl.Marker()
+                        .setLngLat([flight.lon, flight.lat])
+                        .setPopup(new mapboxgl.Popup().setText(`Flight: ${flight.callsign || 'N/A'}`))
+                        .addTo(map);
+                }
             } else {
-                // Create a new marker if it doesn't exist
-                markers[flight.callsign] = new mapboxgl.Marker()
-                    .setLngLat([flight.lon, flight.lat])
-                    .setPopup(new mapboxgl.Popup().setText(`Flight: ${flight.callsign || 'N/A'}`))
-                    .addTo(map);
+                console.warn('Invalid coordinates for flight:', flight);
             }
         });
     }
