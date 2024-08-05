@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ADS-B Map</title>
+    <title>ADS-B Map - LGA</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
@@ -19,9 +19,9 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpY2J1dHRvbiIsImEiOiJjazU4czY4bzQwaHJ6M2RvZWxodjRlNmNpIn0.hvLMwQMiUk6_1RoeyascnA';
     var map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // new style URL
-        center: [-0.45390, 51.46918], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        style: 'mapbox://styles/ericbutton/clzhb4nyf004a01pb1cfiegh9', // new style URL
+        center: [-73.8740, 40.7769], // LGA Airport [lng, lat]
+        zoom: 10 // starting zoom
     });
 
     map.on('load', function() {
@@ -34,12 +34,12 @@
 
     const apiKey = 'f1509e043amsh13cddace1c2d2cap167acdjsn1ca571b269f0';
 
-    // Define the center point and radius for the search
-    const latitude = 51.46918; // Replace with your desired latitude
-    const longitude = -0.45390; // Replace with your desired longitude
-    const distance = 100; // Replace with your desired radius in nautical miles
+    // Define the center point and radius for the search around LGA
+    const latitude = 40.7769; // LGA latitude
+    const longitude = -73.8740; // LGA longitude
+    const distance = 100; // Radius in nautical miles
 
-    // Construct the API URL
+    // Construct the API URL for fetching ADS-B data around LGA
     const adsbApiUrl = `https://adsbexchange-com1.p.rapidapi.com/v2/lat/${latitude}/lon/${longitude}/dist/${distance}/`;
 
     // Function to fetch ADS-B data
