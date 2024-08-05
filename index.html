@@ -21,7 +21,7 @@
         container: 'map', // container ID
         style: 'mapbox://styles/ericbutton/clzhipqgw010r01pa60x18680', // updated style URL
         center: [-73.8740, 40.7769], // LGA Airport [lng, lat]
-        zoom: 14.5, // adjusted zoom level
+        zoom: 14, // adjusted zoom level
         pitch: 0, // optional, adds a slight tilt to give a more dynamic view
         bearing: 0 // optional, keeps the map north-up
     });
@@ -61,7 +61,7 @@
         const apiKey = 'f1509e043amsh13cddace1c2d2cap167acdjsn1ca571b269f0';
         const latitude = 40.7769; // LGA latitude
         const longitude = -73.8740; // LGA longitude
-        const distance = 15; // Radius in nautical miles
+        const distance = 100; // Radius in nautical miles
 
         const adsbApiUrl = `https://adsbexchange-com1.p.rapidapi.com/v2/lat/${latitude}/lon/${longitude}/dist/${distance}/`;
 
@@ -99,7 +99,7 @@
 
         // Update or add markers for current aircraft data
         aircraftData.forEach(flight => {
-            if (flight.lon && flight.lat) {  // Ensure valid coordinates
+            if (flight.lon !== null && flight.lat !== null && !isNaN(flight.lon) && !isNaN(flight.lat)) {  // Ensure valid coordinates
                 if (markers[flight.callsign]) {
                     // Update the existing marker position
                     markers[flight.callsign].setLngLat([flight.lon, flight.lat]);
