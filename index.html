@@ -24,6 +24,10 @@
         zoom: 9 // starting zoom
     });
 
+    map.on('load', function() {
+        console.log('Map has loaded successfully');
+    });
+
     const apiKey = 'f1509e043amsh13cddace1c2d2cap167acdjsn1ca571b269f0';
 
     // Define the center point and radius for the search
